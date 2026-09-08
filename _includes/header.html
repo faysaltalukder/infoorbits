@@ -1,50 +1,249 @@
-{% assign all_categories = site.posts | map: "categories" | join: "," | split: "," | uniq | sort %}
-
 <header class="site-header" id="site-header">
   <div class="container header-inner">
+
+    <!-- Logo -->
     <a class="brand" href="{{ '/' | relative_url }}" aria-label="{{ site.title }} home">
-      <span class="brand-mark">Info<span class="brand-mark-accent">Orbit</span></span>
+      <span class="brand-mark">
+        Info<span class="brand-mark-accent">Orbit</span>
+      </span>
     </a>
 
+    <!-- Main Navigation -->
     <nav class="main-nav" aria-label="Primary navigation">
       <ul class="main-nav-list">
-        <li><a href="{{ '/' | relative_url }}">Home</a></li>
+
+        <!-- Home -->
+        <li>
+          <a href="{{ '/' | relative_url }}">Home</a>
+        </li>
+
+        <!-- Categories Dropdown -->
         <li class="has-dropdown">
-          <button class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+
+          <button
+            class="nav-dropdown-toggle"
+            aria-expanded="false"
+            aria-haspopup="true"
+          >
             Categories
-            <svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+
+            <svg
+              width="10"
+              height="6"
+              viewBox="0 0 10 6"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M1 1L5 5L9 1"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
           </button>
+
           <ul class="nav-dropdown-menu">
-            {% for cat in all_categories %}
-              <li><a href="{{ '/categories/' | relative_url }}#{{ cat | slugify }}">{{ cat }}</a></li>
-            {% endfor %}
+
+            <li>
+              <a href="{{ '/categories/' | relative_url }}#digital-marketing">
+                Digital Marketing
+              </a>
+            </li>
+
+            <li>
+              <a href="{{ '/categories/' | relative_url }}#marketing-with-ai">
+                Marketing with AI
+              </a>
+            </li>
+
+            <li>
+              <a href="{{ '/categories/' | relative_url }}#marketing-case-studies">
+                Marketing Case Studies
+              </a>
+            </li>
+
+            <li>
+              <a href="{{ '/categories/' | relative_url }}#psychological-marketing">
+                Psychological Marketing
+              </a>
+            </li>
+
+            <li>
+              <a href="{{ '/categories/' | relative_url }}#market-analysis">
+                Market Analysis
+              </a>
+            </li>
+
           </ul>
         </li>
-        <li><a href="{{ '/tags/' | relative_url }}">Tags</a></li>
-        <li><a href="{{ '/about/' | relative_url }}">About</a></li>
+
+        <!-- Technology -->
+        <li>
+          <a href="{{ '/categories/' | relative_url }}#technology">
+            Technology
+          </a>
+        </li>
+
+        <!-- Marketing -->
+        <li>
+          <a href="{{ '/categories/' | relative_url }}#marketing">
+            Marketing
+          </a>
+        </li>
+
+        <!-- Business -->
+        <li>
+          <a href="{{ '/categories/' | relative_url }}#business">
+            Business
+          </a>
+        </li>
+
+        <!-- About -->
+        <li>
+          <a href="{{ '/about/' | relative_url }}">
+            About
+          </a>
+        </li>
+
       </ul>
     </nav>
 
+    <!-- Header Actions -->
     <div class="header-actions">
-      <a class="icon-btn" href="{{ '/search/' | relative_url }}" aria-label="Search">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+
+      <!-- Search -->
+      <a
+        class="icon-btn"
+        href="{{ '/search/' | relative_url }}"
+        aria-label="Search"
+      >
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden="true"
+        >
+          <circle
+            cx="11"
+            cy="11"
+            r="7"
+            stroke="currentColor"
+            stroke-width="2"
+          />
+          <path
+            d="M20 20L16.65 16.65"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
       </a>
-      <button class="hamburger" id="hamburger-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
-        <span></span><span></span><span></span>
+
+      <!-- Mobile Hamburger -->
+      <button
+        class="hamburger"
+        id="hamburger-btn"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
       </button>
+
     </div>
   </div>
 
-  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+
+  <!-- Mobile Menu -->
+  <div
+    class="mobile-menu"
+    id="mobile-menu"
+    aria-hidden="true"
+  >
     <ul class="mobile-menu-list">
-      <li><a href="{{ '/' | relative_url }}">Home</a></li>
-      <li class="mobile-menu-heading">Categories</li>
-      {% for cat in all_categories %}
-        <li><a href="{{ '/categories/' | relative_url }}#{{ cat | slugify }}">{{ cat }}</a></li>
-      {% endfor %}
-      <li><a href="{{ '/tags/' | relative_url }}">Tags</a></li>
-      <li><a href="{{ '/about/' | relative_url }}">About</a></li>
-      <li><a href="{{ '/search/' | relative_url }}">Search</a></li>
+
+      <!-- Home -->
+      <li>
+        <a href="{{ '/' | relative_url }}">
+          Home
+        </a>
+      </li>
+
+      <!-- Categories -->
+      <li class="mobile-menu-heading">
+        Categories
+      </li>
+
+      <li>
+        <a href="{{ '/categories/' | relative_url }}#digital-marketing">
+          Digital Marketing
+        </a>
+      </li>
+
+      <li>
+        <a href="{{ '/categories/' | relative_url }}#marketing-with-ai">
+          Marketing with AI
+        </a>
+      </li>
+
+      <li>
+        <a href="{{ '/categories/' | relative_url }}#marketing-case-studies">
+          Marketing Case Studies
+        </a>
+      </li>
+
+      <li>
+        <a href="{{ '/categories/' | relative_url }}#psychological-marketing">
+          Psychological Marketing
+        </a>
+      </li>
+
+      <li>
+        <a href="{{ '/categories/' | relative_url }}#market-analysis">
+          Market Analysis
+        </a>
+      </li>
+
+      <!-- Technology -->
+      <li>
+        <a href="{{ '/categories/' | relative_url }}#technology">
+          Technology
+        </a>
+      </li>
+
+      <!-- Marketing -->
+      <li>
+        <a href="{{ '/categories/' | relative_url }}#marketing">
+          Marketing
+        </a>
+      </li>
+
+      <!-- Business -->
+      <li>
+        <a href="{{ '/categories/' | relative_url }}#business">
+          Business
+        </a>
+      </li>
+
+      <!-- About -->
+      <li>
+        <a href="{{ '/about/' | relative_url }}">
+          About
+        </a>
+      </li>
+
+      <!-- Search -->
+      <li>
+        <a href="{{ '/search/' | relative_url }}">
+          Search
+        </a>
+      </li>
+
     </ul>
   </div>
+
 </header>
