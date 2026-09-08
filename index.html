@@ -1,0 +1,86 @@
+---
+layout: default
+title: Home
+---
+{% assign featured = site.posts | first %}
+{% assign secondary = site.posts | slice: 1, 2 %}
+{% assign is_first_page = true %}
+{% if paginator.page and paginator.page > 1 %}{% assign is_first_page = false %}{% endif %}
+
+<div class="container">
+
+  {% if featured and is_first_page %}
+  <section class="hero-grid">
+    <a class="hero-featured" href="{{ featured.url | relative_url }}">
+      <div class="hero-featured-image">
+        {% assign featured_image = featured.image | default: '/assets/images/placeholder.svg' %}
+        {% if featured_image contains '://' %}
+          <img src="{{ featured_image }}" alt="{{ featured.title }}" loading="eager"
+               onerror="this.onerror=null;this.src='{{ '/assets/images/placeholder.svg' | relative_url }}';">
+        {% else %}
+          <img src="{{ featured_image | relative_url }}" alt="{{ featured.title }}" loading="eager"
+               onerror="this.onerror=null;this.src='{{ '/assets/images/placeholder.svg' | relative_url }}';">
+        {% endif %}
+        {% if featured.categories.first %}
+          <span class="badge badge--category badge--on-image">{{ featured.categories.first }}</span>
+        {% endif %}
+      </div>
+      <div class="hero-featured-body">
+        <h1 class="hero-featured-title">{{ featured.title }}</h1>
+        <p class="hero-featured-excerpt">{{ featured.description | default: featured.excerpt | strip_html | truncate: 130 }}</p>
+        <div class="post-card-meta">
+          <time datetime="{{ featured.date | date_to_xmlschema }}">{{ featured.date | date: "%b %-d, %Y" }}</time>
+        </div>
+      </div>
+    </a>
+
+    <div class="hero-secondary">
+      {% for post in secondary %}
+        <a class="hero-secondary-card" href="{{ post.url | relative_url }}">
+          <div class="hero-secondary-image">
+            {% assign secondary_image = post.image | default: '/assets/images/placeholder.svg' %}
+            {% if secondary_image contains '://' %}
+              <img src="{{ secondary_image }}" alt="{{ post.title }}" loading="lazy"
+                   onerror="this.onerror=null;this.src='{{ '/assets/images/placeholder.svg' | relative_url }}';">
+            {% else %}
+              <img src="{{ secondary_image | relative_url }}" alt="{{ post.title }}" loading="lazy"
+                   onerror="this.onerror=null;this.src='{{ '/assets/images/placeholder.svg' | relative_url }}';">
+            {% endif %}
+            {% if post.categories.first %}
+              <span class="badge badge--category badge--on-image badge--sm">{{ post.categories.first }}</span>
+            {% endif %}
+          </div>
+          <div class="hero-secondary-body">
+            <h2 class="hero-secondary-title">{{ post.title }}</h2>
+            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  <div class="content-layout">
+    <section class="main-feed">
+      <h2 class="section-title">Latest Articles</h2>
+
+      {% if paginator.posts.size > 0 %}
+        <div class="post-grid post-grid--2">
+          {% for post in paginator.posts %}
+            {% if is_first_page and forloop.index0 < 3 %}
+              {% comment %} Skip the 3 posts already shown in the hero on page 1 {% endcomment %}
+            {% else %}
+              {% include post-card.html post=post %}
+            {% endif %}
+          {% endfor %}
+        </div>
+        {% include pagination.html %}
+      {% else %}
+        <p class="empty-state">No posts yet. Check back soon!</p>
+      {% endif %}
+    </section>
+
+    {% include sidebar.html %}
+  </div>
+
+</div>

@@ -1,0 +1,73 @@
+title: InfoOrbit
+description: >-
+  InfoOrbit is a modern editorial blog covering technology, digital
+  marketing, SEO, and useful everyday knowledge — written to be clear,
+  practical, and genuinely worth reading.
+tagline: "Knowledge, Orbiting Around You"
+author:
+  name: InfoOrbit
+  email: contact@infoorbit.example
+
+url: "https://faysaltalukder36-arch.github.io"
+baseurl: "/infoorbits"
+
+lang: en
+timezone: Asia/Dhaka
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  hard_wrap: false
+
+permalink: /:categories/:year/:month/:day/:title/
+
+excerpt_separator: "<!--more-->"
+
+# Pagination (jekyll-paginate is the GitHub Pages–compatible plugin)
+paginate: 9
+paginate_path: "/page/:num/"
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-paginate
+
+feed:
+  path: feed.xml
+
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: post
+      author: "InfoOrbit"
+      image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&q=80"
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: page
+
+
+# Categories used across the site (also derived dynamically from posts)
+categories_list:
+  - Technology
+  - Digital Marketing
+  - SEO
+  - Lifestyle
+  - Knowledge
+
+sass:
+  style: compressed
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - "*.log"
+

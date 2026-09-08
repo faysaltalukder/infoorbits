@@ -1,0 +1,33 @@
+{% assign post = include.post %}
+{% assign words = post.content | strip_html | number_of_words %}
+{% assign reading_time = words | divided_by: 220 | plus: 1 %}
+
+{% assign card_image = post.image | default: '/assets/images/placeholder.svg' %}
+
+<article class="post-card">
+  <a class="post-card-image-link" href="{{ post.url | relative_url }}">
+    <div class="post-card-image">
+      {% if card_image contains '://' %}
+        <img src="{{ card_image }}" alt="{{ post.title }}" loading="lazy"
+             onerror="this.onerror=null;this.src='{{ '/assets/images/placeholder.svg' | relative_url }}';">
+      {% else %}
+        <img src="{{ card_image | relative_url }}" alt="{{ post.title }}" loading="lazy"
+             onerror="this.onerror=null;this.src='{{ '/assets/images/placeholder.svg' | relative_url }}';">
+      {% endif %}
+      {% if post.categories.first %}
+        <span class="badge badge--category badge--on-image">{{ post.categories.first }}</span>
+      {% endif %}
+    </div>
+  </a>
+  <div class="post-card-body">
+    <h3 class="post-card-title">
+      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+    </h3>
+    <p class="post-card-excerpt">{{ post.description | default: post.excerpt | strip_html | truncate: 110 }}</p>
+    <div class="post-card-meta">
+      <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
+      <span class="post-meta-dot">&bull;</span>
+      <span>{{ reading_time }} min read</span>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,32 @@
+---
+layout: default
+title: Categories
+description: Browse all InfoOrbit articles by category.
+---
+{% assign all_categories = site.posts | map: "categories" | join: "," | split: "," | uniq | sort %}
+
+<div class="container">
+  <header class="page-header">
+    <h1 class="page-title">Categories</h1>
+    <p class="page-subtitle">Browse every article by topic.</p>
+  </header>
+
+  {% if all_categories.size > 0 %}
+    {% for cat in all_categories %}
+      {% assign cat_posts = site.posts | where_exp: "p", "p.categories contains cat" %}
+      <section class="category-block" id="{{ cat | slugify }}">
+        <div class="category-block-header">
+          <h2 class="section-title">{{ cat }}</h2>
+          <span class="cat-count cat-count--lg">{{ cat_posts.size }} article{% if cat_posts.size != 1 %}s{% endif %}</span>
+        </div>
+        <div class="post-grid post-grid--3">
+          {% for post in cat_posts %}
+            {% include post-card.html post=post %}
+          {% endfor %}
+        </div>
+      </section>
+    {% endfor %}
+  {% else %}
+    <p class="empty-state">No categories yet.</p>
+  {% endif %}
+</div>

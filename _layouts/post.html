@@ -1,0 +1,106 @@
+---
+layout: default
+---
+{% assign words = content | strip_html | number_of_words %}
+{% assign reading_time = words | divided_by: 220 | plus: 1 %}
+
+<article class="post-single">
+  <div class="container container--narrow">
+
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ '/' | relative_url }}">Home</a>
+      <span class="breadcrumb-sep">/</span>
+      {% if page.categories.first %}
+        <a href="{{ '/categories/' | relative_url }}#{{ page.categories.first | slugify }}">{{ page.categories.first }}</a>
+        <span class="breadcrumb-sep">/</span>
+      {% endif %}
+      <span class="breadcrumb-current">{{ page.title }}</span>
+    </nav>
+
+    <header class="post-header">
+      {% if page.categories.first %}
+        <a class="badge badge--category" href="{{ '/categories/' | relative_url }}#{{ page.categories.first | slugify }}">{{ page.categories.first }}</a>
+      {% endif %}
+      <h1 class="post-title">{{ page.title }}</h1>
+      {% if page.description %}<p class="post-lede">{{ page.description }}</p>{% endif %}
+
+      <div class="post-meta">
+        <span class="post-meta-author">By {{ page.author | default: site.author.name }}</span>
+        <span class="post-meta-dot">&bull;</span>
+        <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
+        {% if page.updated %}
+          <span class="post-meta-dot">&bull;</span>
+          <span>Updated {{ page.updated | date: "%B %-d, %Y" }}</span>
+        {% endif %}
+        <span class="post-meta-dot">&bull;</span>
+        <span>{{ reading_time }} min read</span>
+      </div>
+    </header>
+
+    {% assign post_image = page.image | default: '/assets/images/placeholder.svg' %}
+    <div class="post-hero-image">
+      {% if post_image contains '://' %}
+        <img src="{{ post_image }}" alt="{{ page.title }}" loading="eager"
+             onerror="this.onerror=null;this.src='{{ '/assets/images/placeholder.svg' | relative_url }}';">
+      {% else %}
+        <img src="{{ post_image | relative_url }}" alt="{{ page.title }}" loading="eager"
+             onerror="this.onerror=null;this.src='{{ '/assets/images/placeholder.svg' | relative_url }}';">
+      {% endif %}
+    </div>
+
+    <div class="post-content">
+      {{ content }}
+    </div>
+
+    {% if page.tags.size > 0 %}
+    <div class="post-tags">
+      {% for tag in page.tags %}
+        <a class="tag-pill" href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">#{{ tag }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="post-share">
+      <span class="post-share-label">Share this article:</span>
+      <a class="share-btn" target="_blank" rel="noopener"
+         href="https://twitter.com/intent/tweet?text={{ page.title | url_encode }}&url={{ page.url | absolute_url | url_encode }}"
+         aria-label="Share on Twitter">X</a>
+      <a class="share-btn" target="_blank" rel="noopener"
+         href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url | url_encode }}"
+         aria-label="Share on Facebook">FB</a>
+      <a class="share-btn" target="_blank" rel="noopener"
+         href="https://www.linkedin.com/sharing/share-offsite/?url={{ page.url | absolute_url | url_encode }}"
+         aria-label="Share on LinkedIn">in</a>
+      <button class="share-btn share-btn--copy" type="button" data-copy-url="{{ page.url | absolute_url }}" aria-label="Copy link">Copy Link</button>
+    </div>
+
+    <nav class="post-nav">
+      {% if page.previous %}
+        <a class="post-nav-link post-nav-link--prev" href="{{ page.previous.url | relative_url }}">
+          <span class="post-nav-label">&larr; Previous</span>
+          <span class="post-nav-title">{{ page.previous.title }}</span>
+        </a>
+      {% else %}<span></span>{% endif %}
+      {% if page.next %}
+        <a class="post-nav-link post-nav-link--next" href="{{ page.next.url | relative_url }}">
+          <span class="post-nav-label">Next &rarr;</span>
+          <span class="post-nav-title">{{ page.next.title }}</span>
+        </a>
+      {% endif %}
+    </nav>
+
+    {% assign related = site.posts | where_exp: "p", "p.url != page.url" %}
+    {% assign related_cat = related | where_exp: "p", "p.categories contains page.categories.first" %}
+    {% if related_cat.size > 0 %}
+    <section class="related-posts">
+      <h2 class="section-title">Related Articles</h2>
+      <div class="post-grid post-grid--3">
+        {% for post in related_cat limit: 3 %}
+          {% include post-card.html post=post %}
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+  </div>
+</article>

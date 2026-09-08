@@ -1,0 +1,35 @@
+---
+layout: default
+title: Search
+description: Search InfoOrbit articles by title, category, or tag.
+---
+<div class="container container--narrow">
+  <header class="page-header">
+    <h1 class="page-title">Search</h1>
+    <p class="page-subtitle">Find articles by title, category, or tag.</p>
+  </header>
+
+  <div class="search-box">
+    <label class="sr-only" for="search-input">Search articles</label>
+    <input type="text" id="search-input" placeholder="Search articles..." autocomplete="off">
+  </div>
+
+  <div id="search-results" class="search-results" aria-live="polite"></div>
+</div>
+
+<script type="application/json" id="search-data">
+[
+  {% for post in site.posts %}
+  {
+    "title": {{ post.title | jsonify }},
+    "url": {{ post.url | relative_url | jsonify }},
+    "date": {{ post.date | date: "%b %-d, %Y" | jsonify }},
+    "category": {{ post.categories.first | default: "" | jsonify }},
+    "tags": {{ post.tags | jsonify }},
+    "excerpt": {{ post.description | default: post.excerpt | strip_html | truncate: 140 | jsonify }},
+    {% assign search_image = post.image | default: "/assets/images/placeholder.svg" %}
+    "image": {% if search_image contains '://' %}{{ search_image | jsonify }}{% else %}{{ search_image | relative_url | jsonify }}{% endif %}
+  }{% unless forloop.last %},{% endunless %}
+  {% endfor %}
+]
+</script>

@@ -1,0 +1,51 @@
+{% assign all_categories = site.posts | map: "categories" | join: "," | split: "," | uniq | sort %}
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-col footer-col--about">
+      <span class="brand-mark">Info<span class="brand-mark-accent">Orbit</span></span>
+      <p class="footer-desc">{{ site.description }}</p>
+    </div>
+
+    <div class="footer-col">
+      <h3 class="footer-heading">Quick Links</h3>
+      <ul class="footer-list">
+        <li><a href="{{ '/' | relative_url }}">Home</a></li>
+        <li><a href="{{ '/about/' | relative_url }}">About</a></li>
+        <li><a href="{{ '/categories/' | relative_url }}">Categories</a></li>
+        <li><a href="{{ '/tags/' | relative_url }}">Tags</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h3 class="footer-heading">Explore</h3>
+      <ul class="footer-list">
+        {% for post in site.posts limit: 3 %}
+          <li><a href="{{ post.url | relative_url }}">{{ post.title | truncate: 32 }}</a></li>
+        {% endfor %}
+        {% for cat in all_categories limit: 2 %}
+          <li><a href="{{ '/categories/' | relative_url }}#{{ cat | slugify }}">{{ cat }}</a></li>
+        {% endfor %}
+        <li><a href="{{ '/search/' | relative_url }}">Search</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h3 class="footer-heading">Newsletter</h3>
+      <p class="footer-desc">Get the best of InfoOrbit in your inbox.</p>
+      <form class="newsletter-form" id="footer-newsletter-form" data-newsletter-form>
+        <label class="sr-only" for="footer-newsletter-email">Email address</label>
+        <input type="email" id="footer-newsletter-email" placeholder="you@example.com" required>
+        <button type="submit">Subscribe</button>
+      </form>
+      <p class="newsletter-msg" data-newsletter-msg aria-live="polite"></p>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container footer-bottom-inner">
+      <p>&copy; {{ 'now' | date: "%Y" }} InfoOrbit. All rights reserved.</p>
+      <p class="footer-powered">Powered by Jekyll &amp; GitHub Pages</p>
+    </div>
+  </div>
+</footer>

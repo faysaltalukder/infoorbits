@@ -1,0 +1,39 @@
+---
+layout: default
+title: Tags
+description: Browse all InfoOrbit articles by tag.
+---
+{% assign all_tags = site.posts | map: "tags" | join: "," | split: "," | uniq | sort %}
+
+<div class="container">
+  <header class="page-header">
+    <h1 class="page-title">Tags</h1>
+    <p class="page-subtitle">Explore articles by tag.</p>
+  </header>
+
+  {% if all_tags.size > 0 %}
+    <div class="tag-cloud">
+      {% for tag in all_tags %}
+        {% assign tag_posts = site.posts | where_exp: "p", "p.tags contains tag" %}
+        <a class="tag-pill tag-pill--lg" href="#{{ tag | slugify }}">#{{ tag }} <span class="cat-count">{{ tag_posts.size }}</span></a>
+      {% endfor %}
+    </div>
+
+    {% for tag in all_tags %}
+      {% assign tag_posts = site.posts | where_exp: "p", "p.tags contains tag" %}
+      <section class="category-block" id="{{ tag | slugify }}">
+        <div class="category-block-header">
+          <h2 class="section-title">#{{ tag }}</h2>
+          <span class="cat-count cat-count--lg">{{ tag_posts.size }} article{% if tag_posts.size != 1 %}s{% endif %}</span>
+        </div>
+        <div class="post-grid post-grid--3">
+          {% for post in tag_posts %}
+            {% include post-card.html post=post %}
+          {% endfor %}
+        </div>
+      </section>
+    {% endfor %}
+  {% else %}
+    <p class="empty-state">No tags yet.</p>
+  {% endif %}
+</div>
