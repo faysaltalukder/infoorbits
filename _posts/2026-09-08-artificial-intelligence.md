@@ -11,7 +11,7 @@ tags:
   - Technology
   - Future
 author: "InfoOrbit"
-image: "/assets/images/ai.jpg"
+image: "/assets/images/ai.jpg.jfif"
 description: "A simple and practical look at artificial intelligence, how it works, where we use it, and how AI may change the future of work and everyday life."
 ---
 
