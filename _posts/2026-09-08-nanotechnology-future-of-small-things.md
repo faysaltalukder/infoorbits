@@ -11,7 +11,7 @@ tags:
   - Science
   - Future
 author: "InfoOrbit"
-image: "/assets/images/resource-library/fashion-02.png"
+image: "/assets/images/image assetsimagesnanotechnology.jpg.jfif"
 description: "Discover how nanotechnology works, where it is being used today, and how manipulating matter at an incredibly small scale could transform medicine, electronics, energy, and everyday life."
 ---
 
