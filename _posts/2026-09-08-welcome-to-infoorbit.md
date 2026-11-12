@@ -9,7 +9,7 @@ tags:
   - Technology
   - Blogging
 author: "InfoOrbit"
-image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&q=80"
+image: "/assets/images/resource-library/fashion-01.png"
 description: "A first look at InfoOrbit — what we cover, why we started, and what you can expect from every article we publish."
 ---
 
